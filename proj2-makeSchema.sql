@@ -7,8 +7,8 @@
 set termout on
 set feedback on
 prompt Building Survey Database. Please wait......
---set termout off
---set feedback off
+set termout off
+set feedback off
 
 --formating for sql plus to make commandline more readable
 --when querying
@@ -172,7 +172,7 @@ insert into Response_Type values (6, 'True/False');
 --the survey creator
 create table Question (
     question_id      NUMBER(8) PRIMARY KEY,
-    question_text    VARCHAR(200),
+    question_text    VARCHAR(175),
     survey_id        NUMBER(6) NOT NULL REFERENCES Survey(survey_id),
     response_type_id NUMERIC(6) NOT NULL REFERENCES Response_Type(response_type_id)
 );
@@ -291,12 +291,12 @@ insert into Response values (45, 3, 7, 20, 7, NULL);
 insert into Response values (46, 3, 7, 20, 8, NULL);
 
 
---set termout on
---set feedback on
+set termout on
+set feedback on
 prompt Querying the number of true responses for Question 5, in Survey 3. Press enter......
 
 SELECT
-     question_id, survey_id, response_option_id, COUNT(response_option_ID) AS TrueCount
+     survey_ID, question_ID, COUNT(response_option_ID) AS TrueCount
 FROM
      response
 GROUP BY 
@@ -304,13 +304,13 @@ GROUP BY
 HAVING 
      question_id = 5 AND survey_id = 3 AND response_option_id = 20;
 
-prompt Querying the number of true responses for Question 5 in SUrvey 3 using join to display the question text. Press enter......
+prompt Querying the number of true responses for Question 6 in Survey 3 using join to display the question text. Press enter......
 
 SELECT 
-    response.survey_ID, response.question_ID, question.question_text, response.response_option_ID, COUNT(response.response_option_ID) AS TrueCount
+    response.survey_ID, response.question_ID, question.question_text, COUNT(response.response_option_ID) AS TrueCount
 FROM 
     response INNER JOIN question ON response.question_ID = question.question_ID
 GROUP BY 
-    question.question_text, response.question_ID, response.survey_ID, response.response_option_ID
+    response.question_ID, response.survey_ID, question.question_text, response.response_option_ID
 HAVING  
     ((response.question_ID = 6) AND (response.survey_ID = 3) AND (response.response_option_ID = 20));
