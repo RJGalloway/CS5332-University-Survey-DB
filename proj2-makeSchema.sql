@@ -7,8 +7,8 @@
 set termout on
 set feedback on
 prompt Building Survey Database. Please wait......
-set termout off
-set feedback off
+--set termout off
+--set feedback off
 
 --formating for sql plus to make commandline more readable
 --when querying
@@ -291,11 +291,10 @@ insert into Response values (45, 3, 7, 20, 7, NULL);
 insert into Response values (46, 3, 7, 20, 8, NULL);
 
 
-set termout on
-set feedback on
+--set termout on
+--set feedback on
 prompt Querying the number of true responses for Question 5, in Survey 3. Press enter......
 
---query to return number of true statements to a particular question
 SELECT question_id, survey_id, response_option_id, COUNT(response_option_ID) AS TrueCount
 FROM response
 GROUP BY question_id, survey_id, response_option_id 
