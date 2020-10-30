@@ -295,7 +295,22 @@ insert into Response values (46, 3, 7, 20, 8, NULL);
 --set feedback on
 prompt Querying the number of true responses for Question 5, in Survey 3. Press enter......
 
-SELECT question_id, survey_id, response_option_id, COUNT(response_option_ID) AS TrueCount
-FROM response
-GROUP BY question_id, survey_id, response_option_id 
-HAVING question_id = 5 AND survey_id = 3 AND response_option_id = 20;
+SELECT
+     question_id, survey_id, response_option_id, COUNT(response_option_ID) AS TrueCount
+FROM
+     response
+GROUP BY 
+     question_id, survey_id, response_option_id 
+HAVING 
+     question_id = 5 AND survey_id = 3 AND response_option_id = 20;
+
+prompt Querying the number of true responses for Question 5 in SUrvey 3 using join to display the question text. Press enter......
+
+SELECT 
+    response.survey_ID, response.question_ID, question.question_text, response.response_option_ID, COUNT(response.response_option_ID) AS TrueCount
+FROM 
+    response INNER JOIN question ON response.question_ID = question.question_ID
+GROUP BY 
+    question.question_text, response.question_ID, response.survey_ID, response.response_option_ID
+HAVING  
+    ((response.question_ID = 6) AND (response.survey_ID = 3) AND (response.response_option_ID = 20));
